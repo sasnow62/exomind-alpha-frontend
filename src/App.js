@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Mainframe from './components/mainframe/mainframe.jsx'
+import Sentiment from './components/sentiment/sentiment.jsx'
+import './App.scss';
 
-class App extends Component {
-  render() {
-    return (
-      <p>Hello World</p>
-    );
-  }
+class App extends React.Component {
+  render() { return (
+    <div id="view">
+      <Mainframe></Mainframe>
+      <Sentiment></Sentiment>
+    </div>
+  )}
 }
 
 export default App;
