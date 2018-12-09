@@ -3,6 +3,7 @@
   padding: 16px;
   h4 { font-weight: normal; margin: 0; font-size: 1.2em }
   #controls { padding: 8px 8px 36px 8px }
+  #run { width: 123px; }
   button {
     padding: 8px;
     background-color: white;
@@ -12,6 +13,7 @@
 
     &:hover { background-color: #8eee9f; cursor: pointer }
     &:focus { outline:0 }
+    img { max-height: 0.9em; position: relative; top: 0.1em }
   }
 
   @media (orientation: landscape) {

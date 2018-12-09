@@ -5,7 +5,7 @@ export default class Sentiment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoaded: false,
+      isFetching: false,
       headlines: {}
     };
 
@@ -13,11 +13,12 @@ export default class Sentiment extends React.Component {
   }
 
   analyze() {
+    this.setState({ isFetching: true });
     fetch("https://exomind-alpha.herokuapp.com/")
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
-          isLoaded: true,
+          isFetching: false,
           headlines: responseData
         });
       })
@@ -27,7 +28,9 @@ export default class Sentiment extends React.Component {
     return (
       <div id="sentiment">
         <div id="controls">
-          <button onClick={this.analyze}>Run Analysis</button>
+          <button id='run' onClick={this.analyze}>
+            { this.state.isFetching ? <img src={require("./ajax-loader.gif")} alt="spinner"></img> : "Run Analysis" }
+          </button>
         </div>
         <div>
           {Object.keys(this.state.headlines).map((headline) =>
