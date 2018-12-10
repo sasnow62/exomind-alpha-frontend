@@ -6,7 +6,8 @@ export default class Sentiment extends React.Component {
     super(props);
     this.state = {
       isFetching: false,
-      headlines: {}
+      data: [],
+      plot: ""
     };
 
     this.analyze = this.analyze.bind(this)
@@ -14,13 +15,17 @@ export default class Sentiment extends React.Component {
 
   analyze() {
     this.setState({ isFetching: true });
-    fetch("https://exomind-alpha.herokuapp.com/")
+    // fetch("https://exomind-alpha.herokuapp.com/")
+    fetch("http://localhost:8080")
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
           isFetching: false,
-          headlines: responseData
+          data: JSON.parse(responseData.data),
+          plot: JSON.parse(responseData.plot)
         });
+        console.log(typeof this.state.plot)
+        console.log(this.state.plot)
       })
   }
 
@@ -32,17 +37,22 @@ export default class Sentiment extends React.Component {
             { this.state.isFetching ? <img src={require("./ajax-loader.gif")} alt="spinner"></img> : "Run Analysis" }
           </button>
         </div>
+
+        { this.state.plot !== "" && (<img id="plot" src={ "data:image/png;base64," + this.state.plot } alt="plot" />) }
+
         <div>
-          {Object.keys(this.state.headlines).map((headline) =>
-            <div>
-              <h4>{ headline }</h4>
-              <ul>
-                <li>Negative: { this.state.headlines[headline].neg }</li>
-                <li>Neutral: { this.state.headlines[headline].neu }</li>
-                <li>Positive: { this.state.headlines[headline].pos }</li>
-                <li>Compound: { this.state.headlines[headline].compound }</li>
-              </ul>
-            </div>
+          { this.state.data.map((item) => {
+            return (
+              <div key={ item.headline }>
+                <h4>{ item.headline }</h4>
+                <ul>
+                  <li>Negative: { item.neg }</li>
+                  <li>Neutral: { item.neu }</li>
+                  <li>Positive: { item.pos }</li>
+                  <li>Compound: { item.compound }</li>
+                </ul>
+              </div>
+            )}
           )}
         </div>
       </div>
