@@ -15,8 +15,8 @@ export default class Sentiment extends React.Component {
 
   analyze() {
     this.setState({ isFetching: true });
-    // fetch("https://exomind-alpha.herokuapp.com/")
-    fetch("http://localhost:8080")
+    fetch("https://exomind-alpha.herokuapp.com/")
+    // fetch("http://localhost:8080")
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
