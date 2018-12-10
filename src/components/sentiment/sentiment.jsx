@@ -25,8 +25,8 @@ export default class Sentiment extends React.Component {
     this.setState({ isFetching: true })
     var sub = this.state.input
 
-    // fetch("https://exomind-alpha.herokuapp.com/")
-    fetch("http://localhost:8080/" + sub)
+    fetch("https://exomind-alpha.herokuapp.com/" + sub)
+    // fetch("http://localhost:8080/" + sub)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
