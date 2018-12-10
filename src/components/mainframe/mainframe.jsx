@@ -22,7 +22,6 @@ export default class Mainframe extends React.Component {
           </div>
           <p><strong>Backend: </strong>Python + Bottle Framework</p>
           <p><strong>Frontend: </strong>React + Webpack</p>
-          <p><strong>Sub-Reddit: </strong>/r/pics/hot</p>
         </div>
       </div>
     );

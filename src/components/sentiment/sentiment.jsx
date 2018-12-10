@@ -7,25 +7,38 @@ export default class Sentiment extends React.Component {
     this.state = {
       isFetching: false,
       data: [],
-      plot: ""
-    };
+      plot: "",
+      input: "",
+      current: ""
+    }
 
     this.analyze = this.analyze.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(e) {
+    this.setState({ input: e.target.value })
   }
 
   analyze() {
-    this.setState({ isFetching: true });
-    fetch("https://exomind-alpha.herokuapp.com/")
-    // fetch("http://localhost:8080")
+    if (this.state.input === "") { alert('Enter a subreddit!'); return }
+    this.setState({ isFetching: true })
+    var sub = this.state.input
+
+    // fetch("https://exomind-alpha.herokuapp.com/")
+    fetch("http://localhost:8080/" + sub)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
           isFetching: false,
+          current: sub,
           data: JSON.parse(responseData.data),
           plot: JSON.parse(responseData.plot)
-        });
-        console.log(typeof this.state.plot)
-        console.log(this.state.plot)
+        })
+      })
+      .catch(() => {
+        alert("CATASTROPHIC MALFUNCTION: Did you type a valid subreddit name?")
+        this.setState({ isFetching: false })
       })
   }
 
@@ -33,11 +46,13 @@ export default class Sentiment extends React.Component {
     return (
       <div id="sentiment">
         <div id="controls">
+          <input type="text" name="subreddit" placeholder="Enter subreddit" onChange={ this.handleChange }></input>
           <button id='run' onClick={this.analyze}>
             { this.state.isFetching ? <img src={require("./ajax-loader.gif")} alt="spinner"></img> : "Run Analysis" }
           </button>
         </div>
 
+        { this.state.current !== "" && (<h1>{"r/" + this.state.current + " Sentiment Overview"}</h1>) }
         { this.state.plot !== "" && (<img id="plot" src={ "data:image/png;base64," + this.state.plot } alt="plot" />) }
 
         <div>
