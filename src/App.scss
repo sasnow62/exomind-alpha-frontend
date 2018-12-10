@@ -1,6 +1,6 @@
 div { box-sizing: border-box; }
 
-@media (orientation: landscape) {
+@media (orientation: landscape) and (min-width:600px) {
   #view {
     display: grid;
     grid-template-columns: 300px auto;
